@@ -11,6 +11,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Box from "@material-ui/core/Box";
 import "./ChangesView.css";
 
 class ChangesOnClassView extends Component {
@@ -66,80 +67,97 @@ class ChangesOnClassView extends Component {
   render() {
     const cards = this.state.entities.map(this.toCard());
     return (
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <TextField
-            className="formController"
-            id="standard-basic"
-            label="Author"
-            type="text"
-            name="author"
-            value={this.state.author}
-            onChange={this.handleChange}
-          />
-          <TextField
-            className="formController"
-            id="standard-basic"
-            label="Changed Property"
-            type="text"
-            name="changedProperty"
-            value={this.state.changedProperty}
-            onChange={this.handleChange}
-          />
-          <TextField
-            className="formController"
-            id="standard-basic"
-            label="Limit"
-            type="number"
-            name="limit"
-            value={this.state.limit}
-            onChange={this.handleChange}
-          />
-          <TextField
-            className="formController"
-            id="standard-basic"
-            label="Skip"
-            type="number"
-            name="skip"
-            value={this.state.skip}
-            onChange={this.handleChange}
-          />
-          <TextField
-            id="date"
-            label="From Date"
-            type="date"
-            className="formController"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            name="fromDate"
-            value={this.state.fromDate}
-            onChange={this.handleChange}
-          />
-          <TextField
-            id="date"
-            label="To Date"
-            type="date"
-            className="formController"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            name="toDate"
-            value={this.state.toDate}
-            onChange={this.handleChange}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            className="formController"
-            type="submit"
-            onClick={this.submitHandler}
-          >
-            Filter
-          </Button>
+      <div>
+        <Typography type="title" variant="h4">
+          Changes on Class
+        </Typography>
+        <br />
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              className="formController"
+              id="standard-basic"
+              label="Author"
+              type="text"
+              name="author"
+              value={this.state.author}
+              onChange={this.handleChange}
+            />
+            <TextField
+              className="formController"
+              id="standard-basic"
+              label="Changed Property"
+              type="text"
+              name="changedProperty"
+              value={this.state.changedProperty}
+              onChange={this.handleChange}
+            />
+            <TextField
+              className="formController"
+              id="standard-basic"
+              label="Limit"
+              type="number"
+              name="limit"
+              value={this.state.limit}
+              onChange={this.handleChange}
+            />
+            <TextField
+              className="formController"
+              id="standard-basic"
+              label="Skip"
+              type="number"
+              name="skip"
+              value={this.state.skip}
+              onChange={this.handleChange}
+            />
+            <TextField
+              id="date"
+              label="From Date"
+              type="date"
+              className="formController"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              name="fromDate"
+              value={this.state.fromDate}
+              onChange={this.handleChange}
+            />
+            <TextField
+              id="date"
+              label="To Date"
+              type="date"
+              className="formController"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              name="toDate"
+              value={this.state.toDate}
+              onChange={this.handleChange}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              className="formController"
+              type="submit"
+              onClick={this.submitHandler}
+            >
+              Filter
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Box
+              textAlign="center"
+              m={1}
+              fontWeight="fontWeightBold"
+              fontSize="h4.fontSize"
+              fontFamily="Monospace"
+            >
+              Total {this.state.entities.length} records found
+            </Box>
+          </Grid>
+          {cards}
         </Grid>
-        {cards}
-      </Grid>
+      </div>
     );
   }
 

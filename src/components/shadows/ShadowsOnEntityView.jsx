@@ -2,19 +2,19 @@ import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
-import "./ChangesView.css";
+import "./ShadowsView.css";
 
-class ChangesOnEntityView extends Component {
+class ShadowsOnEntityView extends Component {
   state = {
     entities: [],
     author: "",
@@ -26,8 +26,10 @@ class ChangesOnEntityView extends Component {
   };
 
   componentDidMount() {
+    console.log("ComponentDidMount");
+    console.log(this.props.cls);
     axios
-      .get(`audit/changes/entities/${this.props.entity}/${this.props.id}`)
+      .get(`/audit/shadows/entities/${this.props.entity}/${this.props.id}`)
       .then((response) => {
         const jsn = response.data;
         console.log(jsn);
@@ -54,7 +56,7 @@ class ChangesOnEntityView extends Component {
     console.log(filter);
     axios
       .put(
-        `/audit/changes/entities/${this.props.entity}/${this.props.id}/filter`,
+        `/audit/shadows/entities/${this.props.entity}/${this.props.id}/filter`,
         filter
       )
       .then((response) => {
@@ -72,7 +74,7 @@ class ChangesOnEntityView extends Component {
     return (
       <div>
         <Typography type="title" variant="h4">
-          Changes on Entity
+          Shadows on Entity
         </Typography>
         <br />
         <Grid container spacing={2}>
@@ -170,40 +172,31 @@ class ChangesOnEntityView extends Component {
         <Card className="entity-object">
           <div className="entity-object__id">
             <span>
-              <p>
-                Id: <strong>{object.globalId.cdoId}</strong>
-              </p>
-              <p>
-                Entity: <strong>{object.globalId.entity}</strong>
-              </p>
-              <p>
-                Change Type : <strong>{object.changeType}</strong>
-              </p>
-              <p>
-                Changed Property : <strong>{object.property}</strong>
-              </p>
+              Id: <strong>{object.it.userId}</strong>
             </span>
           </div>
           <CardContent className="entity-object__properties">
             <Table className="entity-object__properties__table">
               <TableHead>
                 <TableRow className="entity-object__properties__table__row">
-                  <TableCell>
-                    <strong>Old {object.property}</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>New {object.property}</strong>
-                  </TableCell>
+                  <TableCell>Property</TableCell>
+                  <TableCell>Value</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow
-                  key={`${object.commitMetadata.commitId}`}
-                  className="entity-object__properties__table__row"
-                >
-                  <TableCell>{object.left}</TableCell>
-                  <TableCell>{object.right}</TableCell>
-                </TableRow>
+                {Object.keys(object.it).map((key) => {
+                  return (
+                    <TableRow
+                      key={`${object.commitMetadata.id}-${key}`}
+                      className="entity-object__properties__table__row"
+                    >
+                      <TableCell>
+                        <strong>{key}</strong>
+                      </TableCell>
+                      <TableCell>{object.it[key]}</TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </CardContent>
@@ -218,4 +211,4 @@ class ChangesOnEntityView extends Component {
   }
 }
 
-export default ChangesOnEntityView;
+export default ShadowsOnEntityView;

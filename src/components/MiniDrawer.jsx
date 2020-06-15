@@ -163,7 +163,11 @@ export default withRouter(({ history, handleMenuToggle }) => {
             </ListItemIcon>
             <ListItemText primary="Snapshots" />
           </ListItem>
-          <ListItem button>
+          <ListItem
+            button
+            onClick={() => goTo("/shadows", 1)}
+            selected={select === 1}
+          >
             <ListItemIcon>
               <FlipToFrontIcon style={{ fontSize: 40 }} />
             </ListItemIcon>
@@ -171,8 +175,8 @@ export default withRouter(({ history, handleMenuToggle }) => {
           </ListItem>
           <ListItem
             button
-            onClick={() => goTo("/changes", 1)}
-            selected={select === 1}
+            onClick={() => goTo("/changes", 2)}
+            selected={select === 2}
           >
             <ListItemIcon>
               <FlipIcon style={{ fontSize: 40 }} />
@@ -182,8 +186,8 @@ export default withRouter(({ history, handleMenuToggle }) => {
           <Divider />
           <ListItem
             button
-            onClick={() => goTo("/about", 2)}
-            selected={select === 2}
+            onClick={() => goTo("/about", 3)}
+            selected={select === 3}
           >
             <ListItemIcon>
               <ActionInfo style={{ fontSize: 40 }} />

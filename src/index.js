@@ -18,6 +18,10 @@ import SnapshotsOnClassView from "./components/snapshots/SnapshotsOnClassView";
 import ChangesOnAnyObjectView from "./components/changes/ChangesOnAnyObjectView";
 import ChangesOnClassView from "./components/changes/ChangesOnClassView";
 import ChangesOnEntityView from "./components/changes/ChangesOnEntityView";
+import ShadowsQueryView from "./components/shadows/ShadowsQueryView";
+import ShadowsOnAnyObjectView from "./components/shadows/ShadowsOnAnyObjectView";
+import ShadowsOnClassView from "./components/shadows/ShadowsOnClassView";
+import ShadowsOnEntityView from "./components/shadows/ShadowsOnEntityView";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -50,6 +54,30 @@ ReactDOM.render(
               />
             )}
           />
+          <Route exact path="/shadows" component={ShadowsQueryView} />
+          <Route
+            exact
+            path="/shadows/onAnyObject"
+            component={ShadowsOnAnyObjectView}
+          />
+          <Route
+            exact
+            path="/shadows/onClass/:cls"
+            render={(props) => (
+              <ShadowsOnClassView cls={props.match.params.cls} />
+            )}
+          />
+          <Route
+            exact
+            path="/shadows/onEntity/:entity/:id"
+            render={(props) => (
+              <ShadowsOnEntityView
+                entity={props.match.params.entity}
+                id={props.match.params.id}
+              />
+            )}
+          />
+
           <Route exact path="/changes" component={ChangesQueryView} />
           <Route
             exact

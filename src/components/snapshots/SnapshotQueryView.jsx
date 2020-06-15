@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -13,6 +13,7 @@ import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -29,6 +30,18 @@ export default withRouter(({ history, handleMenuToggle }) => {
   const [cls, setCls] = React.useState("");
   const [entity, setEntity] = React.useState("");
   const [id, setId] = React.useState("");
+  const [classList, setClassList] = React.useState([]);
+  useEffect(() => {
+    axios
+      .get("audit/classList")
+      .then((response) => {
+        const jsn = response.data;
+        setClassList(jsn);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
   const goTo = function (link) {
     if (history.location.pathname !== link) history.push(link);
     if (handleMenuToggle) handleMenuToggle();
@@ -42,102 +55,112 @@ export default withRouter(({ history, handleMenuToggle }) => {
   const handleIdChange = (event) => {
     setId(event.target.value);
   };
-
+  const classesMenuList = classList.map((Class) => (
+    <MenuItem value={Class}>{Class}</MenuItem>
+  ));
   return (
-    <Grid container spacing={4}>
-      <Grid item xs>
-        <Card className="OnAnyObject">
-          <CardHeader title="Snapsots On Any Object" />
-          <CardContent>
-            <Typography variant="h8">
-              If you want to see the all snapshots. Click on the following
-              button.
-            </Typography>
-            <Typography noWrap></Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              onClick={() => goTo("/snapshots/onAnyObject")}
-            >
-              Submit
-            </Button>
-          </CardContent>
-        </Card>
-      </Grid>
-      <Grid item xs>
-        <Card className="onClass">
-          <CardHeader title="Get Snapshots on Selected Class"></CardHeader>
-          <CardContent>
-            <Typography variant="h8">
-              Please Select the Class from given list to get the Snapshots of
-              that Class
-            </Typography>
-            <Typography noWrap></Typography>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-label">Class</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={cls}
-                onChange={handleClsChange}
+    <div>
+      <Typography type="title" variant="h4">
+        Snapshots
+      </Typography>
+      <br />
+      <Grid container spacing={4}>
+        <Grid item xs>
+          <Card className="OnAnyObject">
+            <CardHeader title="Snapsots On All Object" />
+            <CardContent>
+              <Typography variant="h8">
+                If you want to see the all snapshots. Click on the following
+                button.
+              </Typography>
+              <Typography noWrap></Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={() => goTo("/snapshots/onAnyObject")}
               >
-                <MenuItem value="com.javers.test.model.User">User</MenuItem>
-              </Select>
-              <FormHelperText>Select Class</FormHelperText>
-            </FormControl>
-            <Typography noWrap></Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => goTo(`/snapshots/onClass/${cls}`)}
-            >
-              Submit
-            </Button>
-          </CardContent>
-        </Card>
-      </Grid>
-      <Grid item xs>
-        <Card className="onEntity">
-          <CardHeader title="Get Snapshots on Selected Entity"></CardHeader>
-          <CardContent>
-            <Typography variant="h8">
-              Please Select the Class from given list to get the Snapshots of
-              that Class
-            </Typography>
-            <Typography noWrap></Typography>
-            <form>
+                Submit
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs>
+          <Card className="onClass">
+            <CardHeader title="Get Snapshots on Selected Class"></CardHeader>
+            <CardContent>
+              <Typography variant="h8">
+                Please Select the Class from given list to get the Snapshots of
+                that Class
+              </Typography>
+              <Typography noWrap></Typography>
               <FormControl className={classes.formControl}>
                 <InputLabel id="demo-simple-select-label">Class</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={entity}
-                  onChange={handleEntityChange}
+                  value={cls}
+                  onChange={handleClsChange}
                 >
-                  <MenuItem value="com.javers.test.model.User">User</MenuItem>
+                  {classesMenuList}
                 </Select>
                 <FormHelperText>Select Class</FormHelperText>
               </FormControl>
-              <TextField
-                className={classes.formControl}
-                id="standard-basic"
-                label="ID"
-                type="number"
-                value={id}
-                onChange={handleIdChange}
-              />
+              <Typography noWrap></Typography>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => goTo(`/snapshots/onEntity/${entity}/${id}`)}
+                className={classes.button}
+                onClick={() => goTo(`/snapshots/onClass/${cls}`)}
               >
                 Submit
               </Button>
-            </form>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs>
+          <Card className="onEntity">
+            <CardHeader title="Get Snapshots on Selected Entity"></CardHeader>
+            <CardContent>
+              <Typography variant="h8">
+                Please Select the Class from given list and ID of the record in
+                that class to get the Snapshots of that particular ID from that
+              </Typography>
+              <Typography noWrap></Typography>
+              <form>
+                <FormControl className={classes.formControl}>
+                  <InputLabel id="demo-simple-select-label">Class</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={entity}
+                    onChange={handleEntityChange}
+                  >
+                    {classesMenuList}
+                  </Select>
+                  <FormHelperText>Select Class</FormHelperText>
+                </FormControl>
+                <TextField
+                  className={classes.formControl}
+                  id="standard-number"
+                  label="ID"
+                  type="number"
+                  value={id}
+                  onChange={handleIdChange}
+                />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  onClick={() => goTo(`/snapshots/onEntity/${entity}/${id}`)}
+                >
+                  Submit
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
-    </Grid>
+    </div>
   );
 });

@@ -61,23 +61,23 @@ export default withRouter(({ history, handleMenuToggle }) => {
   return (
     <div>
       <Typography type="title" variant="h4">
-        Changes
+        Shadows
       </Typography>
       <br />
       <Grid container spacing={4}>
         <Grid item xs>
           <Card className="OnAnyObject">
-            <CardHeader title="Changes On All Object" />
+            <CardHeader title="Shadows On All Object" />
             <CardContent>
               <Typography variant="h8">
-                If you want to see all Changes. Click on the following button.
+                If you want to see all Shadows. Click on the following button.
               </Typography>
               <Typography noWrap></Typography>
               <Button
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                onClick={() => goTo("/changes/onAnyObject")}
+                onClick={() => goTo("/shadows/onAnyObject")}
               >
                 Submit
               </Button>
@@ -86,10 +86,10 @@ export default withRouter(({ history, handleMenuToggle }) => {
         </Grid>
         <Grid item xs>
           <Card className="onClass">
-            <CardHeader title="Get Changes on Selected Class"></CardHeader>
+            <CardHeader title="Get Shadows on Selected Class"></CardHeader>
             <CardContent>
               <Typography variant="h8">
-                Please Select the Class from given list to get the Changes of
+                Please Select the Class from given list to get the Shadows of
                 that Class
               </Typography>
               <Typography noWrap></Typography>
@@ -109,7 +109,7 @@ export default withRouter(({ history, handleMenuToggle }) => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => goTo(`/changes/onClass/${cls}`)}
+                onClick={() => goTo(`/shadows/onClass/${cls}`)}
               >
                 Submit
               </Button>
@@ -118,12 +118,11 @@ export default withRouter(({ history, handleMenuToggle }) => {
         </Grid>
         <Grid item xs>
           <Card className="onEntity">
-            <CardHeader title="Get Changes on Selected Entity"></CardHeader>
+            <CardHeader title="Get Shadows on Selected Entity"></CardHeader>
             <CardContent>
               <Typography variant="h8">
                 Please Select the Class from given list and ID of the record in
-                that class to get the Changes of that particular ID from that
-                Class
+                that class to get the Shadows of that particular ID from that
               </Typography>
               <Typography noWrap></Typography>
               <form>
@@ -150,7 +149,7 @@ export default withRouter(({ history, handleMenuToggle }) => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => goTo(`/changes/onEntity/${entity}/${id}`)}
+                  onClick={() => goTo(`/shadows/onEntity/${entity}/${id}`)}
                 >
                   Submit
                 </Button>
