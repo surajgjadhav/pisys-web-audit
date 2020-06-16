@@ -155,7 +155,9 @@ class ChangesOnEntityView extends Component {
               fontSize="h4.fontSize"
               fontFamily="Monospace"
             >
-              Total {this.state.entities.length} records found
+              {this.state.entities.length === 0
+                ? "No record found"
+                : `Total ${this.state.entities.length} records found`}
             </Box>
           </Grid>
           {cards}
