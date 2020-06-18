@@ -228,6 +228,17 @@ class SnapshotsOnAnyObjectView extends Component {
       </Grid>
     );
   }
+
+  extractEntity(value) {
+    if (Array.isArray(value)) {
+      return value.map((it) => this.extractEntity(it));
+    }
+    if (null === value) {
+      return <li>null</li>;
+    } else {
+      return <li>{value.cdoId}</li>;
+    }
+  }
 }
 
 export default SnapshotsOnAnyObjectView;

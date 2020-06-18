@@ -192,7 +192,13 @@ class ShadowsOnAnyObjectView extends Component {
                       <TableCell>
                         <strong>{key}</strong>
                       </TableCell>
-                      <TableCell>{object.it[key]}</TableCell>
+                      <TableCell>
+                        {typeof object.it[key] === "object" ? (
+                          <ul>{this.extractEntity(object.it[key])}</ul>
+                        ) : (
+                          object.it[key]
+                        )}
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -207,6 +213,16 @@ class ShadowsOnAnyObjectView extends Component {
         </Card>
       </Grid>
     );
+  }
+  extractEntity(value) {
+    if (Array.isArray(value)) {
+      return value.map((it) => this.extractEntity(it));
+    }
+    if (null === value) {
+      return <li>null</li>;
+    } else {
+      return <li>{value.cdoId}</li>;
+    }
   }
 }
 
