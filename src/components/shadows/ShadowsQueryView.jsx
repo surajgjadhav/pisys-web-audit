@@ -5,20 +5,20 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { withRouter } from "react-router-dom";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
-  formControl: {
+  textField: {
     margin: theme.spacing(1),
     minWidth: 120,
+  },
+  autocomplete: {
+    margin: theme.spacing(1),
+    minWidth: 300,
   },
   button: {
     marginTop: theme.spacing(2),
@@ -31,6 +31,8 @@ export default withRouter(({ history, handleMenuToggle }) => {
   const [entity, setEntity] = React.useState("");
   const [id, setId] = React.useState("");
   const [classList, setClassList] = React.useState([]);
+  const [clsInputValue, setClsInputValue] = React.useState("");
+  const [entityInputValue, setEntityInputValue] = React.useState("");
   useEffect(() => {
     axios
       .get("audit/classList")
@@ -46,18 +48,9 @@ export default withRouter(({ history, handleMenuToggle }) => {
     if (history.location.pathname !== link) history.push(link);
     if (handleMenuToggle) handleMenuToggle();
   };
-  const handleClsChange = (event) => {
-    setCls(event.target.value);
-  };
-  const handleEntityChange = (event) => {
-    setEntity(event.target.value);
-  };
   const handleIdChange = (event) => {
     setId(event.target.value);
   };
-  const classesMenuList = classList.map((Class) => (
-    <MenuItem value={Class}>{Class}</MenuItem>
-  ));
   return (
     <div>
       <Typography type="title" variant="h4">
@@ -93,22 +86,32 @@ export default withRouter(({ history, handleMenuToggle }) => {
                 that Class
               </Typography>
               <Typography noWrap></Typography>
-              <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Class</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={cls}
-                  onChange={handleClsChange}
-                >
-                  {classesMenuList}
-                </Select>
-                <FormHelperText>Select Class</FormHelperText>
-              </FormControl>
+              <Autocomplete
+                className={classes.autocomplete}
+                value={null}
+                onChange={(event, selectedCls) => {
+                  setCls(selectedCls);
+                }}
+                inputValue={clsInputValue}
+                onInputChange={(event, newClsInputValue) => {
+                  setClsInputValue(newClsInputValue);
+                }}
+                id="controllable-states-demo"
+                options={classList}
+                style={{ width: 300 }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Select Class"
+                    variant="outlined"
+                  />
+                )}
+              />
               <Typography noWrap></Typography>
               <Button
                 variant="contained"
                 color="primary"
+                className={classes.button}
                 onClick={() => goTo(`/shadows/onClass/${cls}`)}
               >
                 Submit
@@ -126,20 +129,29 @@ export default withRouter(({ history, handleMenuToggle }) => {
               </Typography>
               <Typography noWrap></Typography>
               <form>
-                <FormControl className={classes.formControl}>
-                  <InputLabel id="demo-simple-select-label">Class</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={entity}
-                    onChange={handleEntityChange}
-                  >
-                    {classesMenuList}
-                  </Select>
-                  <FormHelperText>Select Class</FormHelperText>
-                </FormControl>
+                <Autocomplete
+                  className={classes.autocomplete}
+                  value={null}
+                  onChange={(event, selectedEntity) => {
+                    setEntity(selectedEntity);
+                  }}
+                  inputValue={entityInputValue}
+                  onInputChange={(event, newEntityInputValue) => {
+                    setEntityInputValue(newEntityInputValue);
+                  }}
+                  id="controllable-states-demo"
+                  options={classList}
+                  style={{ width: 300 }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Select Class"
+                      variant="outlined"
+                    />
+                  )}
+                />
                 <TextField
-                  className={classes.formControl}
+                  className={classes.textField}
                   id="standard-basic"
                   label="ID"
                   type="number"
@@ -149,6 +161,7 @@ export default withRouter(({ history, handleMenuToggle }) => {
                 <Button
                   variant="contained"
                   color="primary"
+                  className={classes.button}
                   onClick={() => goTo(`/shadows/onEntity/${entity}/${id}`)}
                 >
                   Submit
