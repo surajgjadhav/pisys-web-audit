@@ -88,7 +88,7 @@ export default withRouter(({ history, handleMenuToggle }) => {
               <Typography noWrap></Typography>
               <Autocomplete
                 className={classes.autocomplete}
-                value={null}
+                value={cls}
                 onChange={(event, selectedCls) => {
                   setCls(selectedCls);
                 }}
@@ -131,7 +131,7 @@ export default withRouter(({ history, handleMenuToggle }) => {
               <form>
                 <Autocomplete
                   className={classes.autocomplete}
-                  value={null}
+                  value={entity}
                   onChange={(event, selectedEntity) => {
                     setEntity(selectedEntity);
                   }}
