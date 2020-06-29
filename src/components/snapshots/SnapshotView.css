@@ -4,10 +4,6 @@
   display: flex;
   flex-direction: column;
 }
-.formController {
-  margin: 10px;
-  padding: 40px;
-}
 
 .entity-object .entity-object__properties {
   padding: 0;

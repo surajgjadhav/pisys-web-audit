@@ -75,7 +75,7 @@ class ChangesOnClassView extends Component {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
-              className="formController"
+              style={{ margin: 4 }}
               id="standard-basic"
               label="Author"
               type="text"
@@ -84,7 +84,7 @@ class ChangesOnClassView extends Component {
               onChange={this.handleChange}
             />
             <TextField
-              className="formController"
+              style={{ margin: 4 }}
               id="standard-basic"
               label="Changed Property"
               type="text"
@@ -93,7 +93,7 @@ class ChangesOnClassView extends Component {
               onChange={this.handleChange}
             />
             <TextField
-              className="formController"
+              style={{ margin: 4 }}
               id="standard-basic"
               label="Limit"
               type="number"
@@ -102,7 +102,7 @@ class ChangesOnClassView extends Component {
               onChange={this.handleChange}
             />
             <TextField
-              className="formController"
+              style={{ margin: 4 }}
               id="standard-basic"
               label="Skip"
               type="number"
@@ -114,7 +114,7 @@ class ChangesOnClassView extends Component {
               id="date"
               label="From Date"
               type="date"
-              className="formController"
+              style={{ margin: 4 }}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -126,7 +126,7 @@ class ChangesOnClassView extends Component {
               id="date"
               label="To Date"
               type="date"
-              className="formController"
+              style={{ margin: 4 }}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -137,7 +137,7 @@ class ChangesOnClassView extends Component {
             <Button
               variant="contained"
               color="primary"
-              className="formController"
+              style={{ marginTop: 14 }}
               type="submit"
               onClick={this.submitHandler}
             >
